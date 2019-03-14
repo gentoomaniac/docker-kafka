@@ -15,21 +15,27 @@ in the same container. This means:
 * No dependency on an external Zookeeper host, or linking to another container
 * Zookeeper and Kafka are configured to work together out of the box
 
+Build
+-----
+```bash
+docker build -t kafka-2.1.1-openjdk-11 .
+```
+
 Run
 ---
 
 ```bash
-docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=`docker-machine ip \`docker-machine active\`` --env ADVERTISED_PORT=9092 spotify/kafka
+docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=<docker machine ip> --env ADVERTISED_PORT=9092 kafka-2.1.1-openjdk-11:latest
 ```
 
 ```bash
-export KAFKA=`docker-machine ip \`docker-machine active\``:9092
-kafka-console-producer.sh --broker-list $KAFKA --topic test
+export KAFKA=<docker machine ip>:9092
+docker exec -it kafka kafka-console-producer.sh --broker-list $KAFKA --topic test
 ```
 
 ```bash
-export ZOOKEEPER=`docker-machine ip \`docker-machine active\``:2181
-kafka-console-consumer.sh --zookeeper $ZOOKEEPER --topic test
+export ZOOKEEPER=<docker machine ip>:2181
+docker exec -it kafka kafka-console-consumer.sh --zookeeper $ZOOKEEPER --topic test
 ```
 
 Running the proxy
@@ -49,7 +55,7 @@ docker run -p 2181:2181 -p 9092:9092 \
     --env TOPICS=my-topic,some-other-topic \
     --env ZK_CONNECT=kafka7zookeeper:2181/root/path \
     --env GROUP_ID=mymirror \
-    spotify/kafkaproxy
+    kafka-2.1.1-openjdk-11
 ```
 
 In the box
