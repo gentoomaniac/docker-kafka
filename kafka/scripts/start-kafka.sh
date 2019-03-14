@@ -8,6 +8,8 @@
 # * LOG_RETENTION_BYTES: configure the size at which segments are pruned from the log, (default is 1073741824, for 1GB)
 # * NUM_PARTITIONS: configure the default number of log partitions per topic
 
+LOG_DIRECTORIES=/var/lib/kafka
+
 echo '' >> $KAFKA_HOME/config/server.properties
 
 # Configure advertised host/port if we run in helios
@@ -60,6 +62,8 @@ if [ ! -z "$LOG_RETENTION_BYTES" ]; then
     echo "log retention bytes: $LOG_RETENTION_BYTES"
     sed -r -i "s/#(log.retention.bytes)=(.*)/\1=$LOG_RETENTION_BYTES/g" $KAFKA_HOME/config/server.properties
 fi
+echo "log directories: $LOG_DIRECTORIES"
+echo "log.dirs=$LOG_DIRECTORIES" >> $KAFKA_HOME/config/server.properties
 
 # Configure the default number of log partitions per topic
 if [ ! -z "$NUM_PARTITIONS" ]; then
