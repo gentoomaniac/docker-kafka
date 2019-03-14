@@ -34,8 +34,8 @@ docker exec -it kafka kafka-console-producer.sh --broker-list $KAFKA --topic tes
 ```
 
 ```bash
-export ZOOKEEPER=<docker machine ip>:2181
-docker exec -it kafka kafka-console-consumer.sh --zookeeper $ZOOKEEPER --topic test
+export KAFKA=<docker machine ip>:9092
+docker exec -it kafka kafka-console-consumer.sh  --bootstrap-server localhost:9092 --topic test --from-beginning
 ```
 
 Running the proxy
