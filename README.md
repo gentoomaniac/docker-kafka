@@ -27,6 +27,14 @@ Run
 ```bash
 docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=<docker machine ip> --env ADVERTISED_PORT=9092 kafka-2.1.1-openjdk-11:latest
 ```
+For persistent storage:
+```bash
+docker run -p 2181:2181 -p 9092:9092
+    -v '/local/storage:/var/lib/kafka' \
+    --env ADVERTISED_HOST=<docker machine ip> \
+    --env ADVERTISED_PORT=9092 \
+    kafka-2.1.1-openjdk-11:latest
+```
 
 ```bash
 export KAFKA=<docker machine ip>:9092
